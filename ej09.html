@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 9 - Temporizador</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #ffd6d6, #c9edff);
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+            color: #17365c;
+        }
+
+        header {
+            background-color: #ffb6a3;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 10px;
+        }
+
+        .contenedor {
+            background-color: white;
+            width: 90%;
+            max-width: 550px;
+            margin: 40px auto;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px #00000020;
+        }
+
+        .campos {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 110px;
+            padding: 12px;
+            border: 2px solid #a8ddff;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #ff7185;
+        }
+
+        .pantalla {
+            background-color: #d6efff;
+            border-radius: 18px;
+            padding: 25px;
+            margin: 25px auto;
+            max-width: 350px;
+        }
+
+        #tiempo {
+            font-size: clamp(45px, 10vw, 65px);
+            font-weight: bold;
+            color: #17365c;
+            letter-spacing: 3px;
+        }
+
+        .botones {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        button {
+            background-color: #ff7185;
+            color: white;
+            border: none;
+            padding: 13px 18px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e95470;
+        }
+
+        .iniciar {
+            background-color: #5abfa6;
+        }
+
+        .iniciar:hover {
+            background-color: #399c83;
+        }
+
+        .pausar {
+            background-color: #6daee8;
+        }
+
+        .pausar:hover {
+            background-color: #468ecb;
+        }
+
+        #mensaje {
+            margin-top: 20px;
+            font-weight: bold;
+            min-height: 24px;
+        }
+
+        .volver {
+            display: inline-block;
+            margin: 15px;
+            color: #17365c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 20px;
+        }
+
+        @media (max-width: 400px) {
+            .campos {
+                gap: 10px;
+            }
+
+            input {
+                width: 90px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Ejercicio 9</h1>
+        <h2>Temporizador de Cuenta Regresiva</h2>
+    </header>
+
+    <div class="contenedor">
+
+        <h2>⏳ Mi Temporizador</h2>
+
+        <p>
+            Ingresa los minutos y segundos para
+            iniciar una cuenta regresiva.
+        </p>
+
+        <div class="campos">
+
+            <label class="campo">
+                Minutos
+                <input
+                    type="number"
+                    id="minutos"
+                    min="0"
+                    max="999"
+                    value="2"
+                >
+            </label>
+
+            <label class="campo">
+                Segundos
+                <input
+                    type="number"
+                    id="segundos"
+                    min="0"
+                    max="59"
+                    value="30"
+                >
+            </label>
+
+        </div>
+
+        <div class="pantalla">
+            <div id="tiempo" role="timer">
+                02:30
+            </div>
+        </div>
+
+        <div class="botones">
+
+            <button class="iniciar" onclick="iniciarTemporizador()">
+                ▶ Iniciar
+            </button>
+
+            <button class="pausar" onclick="pausarTemporizador()">
+                ⏸ Pausar
+            </button>
+
+            <button onclick="reiniciarTemporizador()">
+                ↻ Reiniciar
+            </button>
+
+        </div>
+
+        <p id="mensaje" role="status" aria-live="polite"></p>
+
+    </div>
+
+    <a href="index.html" class="volver">
+        ← Volver al inicio
+    </a>
+
+    <footer>
+        Desarrollado por el Grupo 4
+        <p>Programación Web Avanzada - 2026</p>
+    </footer>
+
+    <script>
+        let tiempoRestante = 150;
+        let intervalo = null;
+        let finalizacion = null;
+        let pausado = false;
+
+        const pantalla = document.getElementById("tiempo");
+        const mensaje = document.getElementById("mensaje");
+
+        function mostrarTiempo() {
+            let minutos = Math.floor(tiempoRestante / 60);
+            let segundos = tiempoRestante % 60;
+
+            pantalla.textContent =
+                String(minutos).padStart(2, "0") + ":" +
+                String(segundos).padStart(2, "0");
+        }
+
+        function leerTiempo() {
+            const minutos = Number(
+                document.getElementById("minutos").value
+            );
+
+            const segundos = Number(
+                document.getElementById("segundos").value
+            );
+
+            if (
+                !Number.isInteger(minutos) ||
+                !Number.isInteger(segundos) ||
+                minutos < 0 ||
+                minutos > 999 ||
+                segundos < 0 ||
+                segundos > 59 ||
+                minutos * 60 + segundos === 0
+            ) {
+                mensaje.textContent =
+                    "❌ Ingresa minutos y segundos válidos.";
+                return null;
+            }
+
+            return minutos * 60 + segundos;
+        }
+
+        function iniciarTemporizador() {
+
+            // Evitar varios intervalos al mismo tiempo
+            if (intervalo !== null) {
+                return;
+            }
+
+            // Continuar si estaba pausado
+            if (!pausado) {
+                const tiempo = leerTiempo();
+
+                if (tiempo === null) {
+                    return;
+                }
+
+                tiempoRestante = tiempo;
+            }
+
+            pausado = false;
+            mensaje.textContent = "⏳ Cuenta regresiva en curso...";
+            mostrarTiempo();
+
+            finalizacion = Date.now() + tiempoRestante * 1000;
+
+            intervalo = setInterval(function() {
+
+                tiempoRestante = Math.max(
+                    0,
+                    Math.ceil((finalizacion - Date.now()) / 1000)
+                );
+
+                mostrarTiempo();
+
+                if (tiempoRestante === 0) {
+                    clearInterval(intervalo);
+                    intervalo = null;
+                    pausado = false;
+
+                    mensaje.textContent =
+                        "🎉 ¡El tiempo ha terminado!";
+
+                    alert("⏰ ¡Tiempo terminado!");
+                }
+
+            }, 200);
+        }
+
+        function pausarTemporizador() {
+
+            if (intervalo !== null) {
+                tiempoRestante = Math.max(
+                    0,
+                    Math.ceil((finalizacion - Date.now()) / 1000)
+                );
+
+                clearInterval(intervalo);
+                intervalo = null;
+                pausado = tiempoRestante > 0;
+
+                mostrarTiempo();
+                mensaje.textContent = "⏸ Temporizador pausado.";
+            }
+        }
+
+        function reiniciarTemporizador() {
+
+            clearInterval(intervalo);
+            intervalo = null;
+            pausado = false;
+
+            const tiempo = leerTiempo();
+
+            if (tiempo === null) {
+                return;
+            }
+
+            tiempoRestante = tiempo;
+            mostrarTiempo();
+
+            mensaje.textContent =
+                "↻ Temporizador reiniciado.";
+        }
+
+        mostrarTiempo();
+    </script>
+
+</body>
+</html>

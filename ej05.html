@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 5 - Validación de Formulario</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #ffd6d6, #c9edff);
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+            color: #17365c;
+        }
+
+        header {
+            background-color: #ffb6a3;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 10px;
+        }
+
+        .contenedor {
+            background-color: white;
+            width: 90%;
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px #00000020;
+        }
+
+        .formulario {
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 15px 0 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 2px solid #a8ddff;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #ff7185;
+        }
+
+        button {
+            width: 100%;
+            background-color: #ff7185;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 22px;
+        }
+
+        button:hover {
+            background-color: #e95470;
+        }
+
+        #mensaje {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .error {
+            background-color: #ffe0e0;
+            color: #b32626;
+        }
+
+        .exito {
+            background-color: #d5f5e3;
+            color: #176b42;
+        }
+
+        .volver {
+            display: inline-block;
+            margin: 15px;
+            color: #17365c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Ejercicio 5</h1>
+        <h2>Validación de Formulario</h2>
+    </header>
+
+    <div class="contenedor">
+
+        <h2>📝 Formulario de Registro</h2>
+
+        <p>
+            Completa todos los campos para
+            validar tu información.
+        </p>
+
+        <form class="formulario" id="formulario" novalidate>
+
+            <label for="nombre">Nombre completo:</label>
+            <input type="text" id="nombre"
+                   placeholder="Ejem:Jorge Villamar">
+
+            <label for="correo">Correo electrónico:</label>
+            <input type="email" id="correo"
+                   placeholder="ejemplo@correo.com">
+
+            <label for="contrasena">Contraseña:</label>
+            <input type="password" id="contrasena"
+                   placeholder="Ingresa tu contraseña">
+
+            <button type="submit">
+                Validar formulario
+            </button>
+
+        </form>
+
+        <div id="mensaje" role="status" aria-live="polite"></div>
+
+    </div>
+
+    <a href="index.html" class="volver">
+        ← Volver al inicio
+    </a>
+
+    <footer>
+        Desarrollado por el Grupo 4
+        <p>Programación Web Avanzada - 2026</p>
+    </footer>
+
+    <script>
+        const formulario = document.getElementById("formulario");
+        const mensaje = document.getElementById("mensaje");
+
+        formulario.addEventListener("submit", function(evento) {
+
+            evento.preventDefault();
+
+            let nombre = document.getElementById("nombre").value.trim();
+            let correo = document.getElementById("correo").value.trim();
+            let contrasena = document.getElementById("contrasena").value;
+
+            if (nombre === "" || correo === "" || contrasena === "") {
+                mostrarMensaje(
+                    "❌ Debes completar todos los campos.",
+                    "error"
+                );
+                return;
+            }
+
+            let formatoCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!formatoCorreo.test(correo)) {
+                mostrarMensaje(
+                    "❌ Ingresa un correo electrónico válido.",
+                    "error"
+                );
+                return;
+            }
+
+            if (contrasena.length < 6) {
+                mostrarMensaje(
+                    "❌ La contraseña debe tener al menos 6 caracteres.",
+                    "error"
+                );
+                return;
+            }
+
+            mostrarMensaje(
+                "✅ ¡Formulario validado correctamente!",
+                "exito"
+            );
+
+            formulario.reset();
+        });
+
+        function mostrarMensaje(texto, tipo) {
+            mensaje.textContent = texto;
+            mensaje.className = tipo;
+            mensaje.style.display = "block";
+        }
+    </script>
+
+</body>
+</html>

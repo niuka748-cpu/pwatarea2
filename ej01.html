@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 - Cambio de Estilo</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #ffd6d6, #c9edff);
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #ffb6a3;
+            padding: 20px;
+            color: #17365c;
+        }
+
+        h1 {
+            margin: 10px;
+        }
+
+        .contenedor {
+            background-color: white;
+            width: 80%;
+            max-width: 550px;
+            margin: 60px auto;
+            padding: 30px 15px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px #00000020;
+        }
+
+        #cuadro {
+            background-color: #a8ddff;
+            width: 80%;
+            max-width: 300px;
+            height: 180px;
+            margin: 25px auto;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: background-color 0.5s;
+        }
+
+        button {
+            background-color: #ff7185;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e95470;
+        }
+
+        .volver {
+            display: inline-block;
+            margin: 15px;
+            color: #17365c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 20px;
+            color: #17365c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Ejercicio 1</h1>
+        <h2>Cambio de Estilo al Clic</h2>
+    </header>
+
+    <div class="contenedor">
+        <h2>¡Cambiemos los colores!</h2>
+
+        <p>
+            Presiona el botón para cambiar
+            el color del siguiente cuadro.
+        </p>
+
+        <div id="cuadro">
+            Mi color puede cambiar
+        </div>
+
+        <button onclick="cambiarColor()">
+            Cambiar color 🎨
+        </button>
+    </div>
+
+    <a href="index.html" class="volver">
+        ← Volver al inicio
+    </a>
+
+    <footer>
+        Desarrollado por el Grupo 4
+        <p>Programación Web Avanzada - 2026</p>
+    </footer>
+
+    <script>
+        let colores = [
+            "#a8ddff",
+            "#ffb6c1",
+            "#ffd59e",
+            "#b9f0df",
+            "#d8c5ff"
+        ];
+
+        let posicion = 0;
+
+        function cambiarColor() {
+            posicion++;
+
+            if (posicion >= colores.length) {
+                posicion = 0;
+            }
+
+            document.getElementById("cuadro").style.backgroundColor =
+                colores[posicion];
+        }
+    </script>
+
+</body>
+</html>

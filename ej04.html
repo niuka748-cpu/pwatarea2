@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 4 - Reloj Analógico</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #ffd6d6, #c9edff);
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+            color: #17365c;
+        }
+
+        header {
+            background-color: #ffb6a3;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 10px;
+        }
+
+        .contenedor {
+            background-color: white;
+            width: 90%;
+            max-width: 550px;
+            margin: 40px auto;
+            padding: 30px 15px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px #00000020;
+        }
+
+        /* Diseño del reloj */
+        .reloj {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            max-width: 100%;
+            aspect-ratio: 1;
+            margin: 30px auto;
+            border: 12px solid #ffb6c1;
+            border-radius: 50%;
+            background: #e9f7ff;
+            box-shadow: 0 5px 15px #00000025;
+        }
+
+        .numero {
+            position: absolute;
+            font-size: 23px;
+            font-weight: bold;
+            transform: translate(-50%, -50%);
+        }
+
+        .n12 { top: 10%; left: 50%; }
+        .n3  { top: 50%; left: 90%; }
+        .n6  { top: 90%; left: 50%; }
+        .n9  { top: 50%; left: 10%; }
+
+        /* Manecillas */
+        .manecilla {
+            position: absolute;
+            left: 50%;
+            bottom: 50%;
+            transform-origin: bottom center;
+            border-radius: 10px;
+            z-index: 2;
+        }
+
+        .hora {
+            width: 8px;
+            height: 65px;
+            margin-left: -4px;
+            background-color: #17365c;
+        }
+
+        .minuto {
+            width: 6px;
+            height: 90px;
+            margin-left: -3px;
+            background-color: #2196f3;
+        }
+
+        .segundo {
+            width: 3px;
+            height: 105px;
+            margin-left: -1.5px;
+            background-color: #ff5e74;
+        }
+
+        .centro {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background-color: #ff5e74;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+        }
+
+        .digital {
+            display: inline-block;
+            background-color: #d6efff;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .volver {
+            display: inline-block;
+            margin: 15px;
+            color: #17365c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 20px;
+        }
+
+        @media (max-width: 400px) {
+            .reloj {
+                width: 240px;
+                height: 240px;
+            }
+
+            .digital {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Ejercicio 4</h1>
+        <h2>Reloj Analógico</h2>
+    </header>
+
+    <div class="contenedor">
+
+        <h2>🕒 Mi Reloj en Tiempo Real</h2>
+
+        <p>
+            Este reloj muestra la hora actual
+            y actualiza sus manecillas automáticamente.
+        </p>
+
+        <div class="reloj">
+
+            <span class="numero n12">12</span>
+            <span class="numero n3">3</span>
+            <span class="numero n6">6</span>
+            <span class="numero n9">9</span>
+
+            <div class="manecilla hora" id="hora"></div>
+            <div class="manecilla minuto" id="minuto"></div>
+            <div class="manecilla segundo" id="segundo"></div>
+
+            <div class="centro"></div>
+
+        </div>
+
+        <h3>Hora actual</h3>
+
+        <div class="digital" id="relojDigital">
+            00:00:00
+        </div>
+
+    </div>
+
+    <a href="index.html" class="volver">
+        ← Volver al inicio
+    </a>
+
+    <footer>
+        Desarrollado por el Grupo 4
+        <p>Programación Web Avanzada - 2026</p>
+    </footer>
+
+    <script>
+        function actualizarReloj() {
+
+            let fecha = new Date();
+
+            let horas = fecha.getHours();
+            let minutos = fecha.getMinutes();
+            let segundos = fecha.getSeconds();
+
+            // Calculamos los grados de las manecillas
+            let gradosHora = (horas % 12) * 30 + minutos * 0.5;
+            let gradosMinuto = minutos * 6 + segundos * 0.1;
+            let gradosSegundo = segundos * 6;
+
+            // Movemos las manecillas
+            document.getElementById("hora").style.transform =
+                "rotate(" + gradosHora + "deg)";
+
+            document.getElementById("minuto").style.transform =
+                "rotate(" + gradosMinuto + "deg)";
+
+            document.getElementById("segundo").style.transform =
+                "rotate(" + gradosSegundo + "deg)";
+
+            // Mostramos la hora digital
+            let horaDigital =
+                String(horas).padStart(2, "0") + ":" +
+                String(minutos).padStart(2, "0") + ":" +
+                String(segundos).padStart(2, "0");
+
+            document.getElementById("relojDigital").textContent =
+                horaDigital;
+        }
+
+        // Actualizar cada segundo
+        setInterval(actualizarReloj, 1000);
+
+        // Mostrar la hora inmediatamente
+        actualizarReloj();
+    </script>
+
+</body>
+</html>

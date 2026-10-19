@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2 - Calculadora Simple</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #ffd6d6, #c9edff);
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #ffb6a3;
+            padding: 20px;
+            color: #17365c;
+        }
+
+        h1 {
+            margin: 10px;
+        }
+
+        .contenedor {
+            background-color: white;
+            width: 90%;
+            max-width: 450px;
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px #00000020;
+        }
+
+        .calculadora {
+            background-color: #e9f5ff;
+            padding: 20px;
+            border-radius: 18px;
+            margin-top: 20px;
+        }
+
+        #pantalla {
+            width: 100%;
+            height: 65px;
+            font-size: 28px;
+            text-align: right;
+            padding: 12px;
+            border: 2px solid #a8ddff;
+            border-radius: 12px;
+            background-color: white;
+            color: #17365c;
+            margin-bottom: 15px;
+        }
+
+        .botones {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 17px 5px;
+            font-size: 22px;
+            border: none;
+            border-radius: 12px;
+            background-color: #a8ddff;
+            color: #17365c;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            filter: brightness(0.92);
+            transform: scale(1.04);
+        }
+
+        .operador {
+            background-color: #ffb6c1;
+        }
+
+        .limpiar {
+            background-color: #ff947e;
+            color: white;
+        }
+
+        .igual {
+            background-color: #73cbb9;
+            color: #17365c;
+        }
+
+        .volver {
+            display: inline-block;
+            margin: 15px;
+            color: #17365c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 20px;
+            color: #17365c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Ejercicio 2</h1>
+        <h2>Calculadora Simple</h2>
+    </header>
+
+    <div class="contenedor">
+        <h2>🧮 Mi Calculadora</h2>
+
+        <p>
+            Realiza operaciones matemáticas
+            utilizando los siguientes botones.
+        </p>
+
+        <div class="calculadora">
+
+            <input type="text" id="pantalla"
+                   readonly aria-label="Pantalla de la calculadora">
+
+            <div class="botones">
+
+                <button class="limpiar" onclick="limpiar()">C</button>
+                <button onclick="borrar()">⌫</button>
+                <button class="operador" onclick="agregar('/')">÷</button>
+                <button class="operador" onclick="agregar('*')">×</button>
+
+                <button onclick="agregar('7')">7</button>
+                <button onclick="agregar('8')">8</button>
+                <button onclick="agregar('9')">9</button>
+                <button class="operador" onclick="agregar('-')">−</button>
+
+                <button onclick="agregar('4')">4</button>
+                <button onclick="agregar('5')">5</button>
+                <button onclick="agregar('6')">6</button>
+                <button class="operador" onclick="agregar('+')">+</button>
+
+                <button onclick="agregar('1')">1</button>
+                <button onclick="agregar('2')">2</button>
+                <button onclick="agregar('3')">3</button>
+                <button class="igual" onclick="calcular()">=</button>
+
+                <button onclick="agregar('0')">0</button>
+                <button onclick="agregar('.')">.</button>
+
+            </div>
+        </div>
+    </div>
+
+    <a href="index.html" class="volver">
+        ← Volver al inicio
+    </a>
+
+    <footer>
+        Desarrollado por el Grupo 4
+        <p>Programación Web Avanzada - 2026</p>
+    </footer>
+
+    <script>
+        let pantalla = document.getElementById("pantalla");
+        let resultadoMostrado = false;
+
+        function agregar(valor) {
+            if (pantalla.value === "Error") {
+                pantalla.value = "";
+            }
+
+            if (resultadoMostrado) {
+                if ("0123456789.".includes(valor)) {
+                    pantalla.value = "";
+                }
+                resultadoMostrado = false;
+            }
+
+            let expresion = pantalla.value;
+            let ultimo = expresion.slice(-1);
+            let operadores = "+-*/";
+
+            if (operadores.includes(valor)) {
+                if (expresion === "") {
+                    if (valor === "-") {
+                        pantalla.value = "-";
+                    }
+                    return;
+                }
+
+                if (operadores.includes(ultimo)) {
+                    pantalla.value = expresion.slice(0, -1) + valor;
+                    return;
+                }
+
+                if (ultimo === ".") {
+                    return;
+                }
+            }
+
+            if (valor === ".") {
+                let numeroActual = expresion.split(/[+\-*/]/).pop();
+
+                if (numeroActual.includes(".")) {
+                    return;
+                }
+
+                if (numeroActual === "") {
+                    pantalla.value += "0";
+                }
+            }
+
+            pantalla.value += valor;
+        }
+
+        function limpiar() {
+            pantalla.value = "";
+            resultadoMostrado = false;
+        }
+
+        function borrar() {
+            pantalla.value = pantalla.value.slice(0, -1);
+            resultadoMostrado = false;
+        }
+
+        function calcular() {
+            let expresion = pantalla.value;
+
+            if (!expresion || !/^[0-9+\-*/.]+$/.test(expresion)) {
+                pantalla.value = "Error";
+                return;
+            }
+
+            let partes = expresion.match(
+                /^(-?\d+(?:\.\d+)?)([+\-*/])(-?\d+(?:\.\d+)?)$/
+            );
+
+            if (!partes) {
+                pantalla.value = "Error";
+                return;
+            }
+
+            let num1 = Number(partes[1]);
+            let operador = partes[2];
+            let num2 = Number(partes[3]);
+            let resultado;
+
+            if (operador === "+") {
+                resultado = num1 + num2;
+            } else if (operador === "-") {
+                resultado = num1 - num2;
+            } else if (operador === "*") {
+                resultado = num1 * num2;
+            } else if (operador === "/") {
+                if (num2 === 0) {
+                    pantalla.value = "Error";
+                    return;
+                }
+                resultado = num1 / num2;
+            }
+
+            pantalla.value = Number(resultado.toFixed(10));
+            resultadoMostrado = true;
+        }
+    </script>
+
+</body>
+</html>

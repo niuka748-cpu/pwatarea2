@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 8 - Carrusel de Imágenes</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #ffd6d6, #c9edff);
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+            color: #17365c;
+        }
+
+        header {
+            background-color: #ffb6a3;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 10px;
+        }
+
+        .contenedor {
+            background-color: white;
+            width: 90%;
+            max-width: 750px;
+            margin: 40px auto;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px #00000020;
+        }
+
+        .carrusel {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin: 25px auto;
+            overflow: hidden;
+            border-radius: 16px;
+            background-color: #e9f7ff;
+        }
+
+        .diapositiva {
+            display: none;
+            position: relative;
+        }
+
+        .diapositiva.activa {
+            display: block;
+        }
+
+        .diapositiva img {
+            display: block;
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+
+        .descripcion {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #17365ccc;
+            color: white;
+            padding: 14px;
+            font-weight: bold;
+        }
+
+        .anterior,
+        .siguiente {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #ff7185dd;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            font-size: 23px;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .anterior {
+            left: 12px;
+        }
+
+        .siguiente {
+            right: 12px;
+        }
+
+        .anterior:hover,
+        .siguiente:hover {
+            background-color: #e95470;
+        }
+
+        .indicadores {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .punto {
+            width: 13px;
+            height: 13px;
+            border: none;
+            border-radius: 50%;
+            background-color: #a8ddff;
+            cursor: pointer;
+        }
+
+        .punto.activo {
+            background-color: #ff7185;
+        }
+
+        .volver {
+            display: inline-block;
+            margin: 15px;
+            color: #17365c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .diapositiva img {
+                height: 230px;
+            }
+
+            .contenedor {
+                padding: 20px 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Ejercicio 8</h1>
+        <h2>Carrusel de Imágenes Automático</h2>
+    </header>
+
+    <div class="contenedor">
+
+        <h2>🌸 Galería de Paisajes</h2>
+
+        <p>
+            Disfruta de nuestra galería de imágenes.
+            Las fotografías cambian automáticamente
+            cada 3 segundos.
+        </p>
+
+        <div class="carrusel">
+
+            <div class="diapositiva activa">
+                <img
+                    src="https://images.unsplash.com/photo-1500534623283-312aade485b7?w=1000"
+                    alt="Paisaje natural"
+                >
+                <div class="descripcion">
+                    🌿 Naturaleza
+                </div>
+            </div>
+
+            <div class="diapositiva">
+                <img
+                    src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1000"
+                    alt="Playa tropical"
+                >
+                <div class="descripcion">
+                    🏖️ Playa
+                </div>
+            </div>
+
+            <div class="diapositiva">
+                <img
+                    src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1000"
+                    alt="Montañas"
+                >
+                <div class="descripcion">
+                    ⛰️ Montañas
+                </div>
+            </div>
+
+            <div class="diapositiva">
+                <img
+                    src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1000"
+                    alt="Bosque verde"
+                >
+                <div class="descripcion">
+                    🌳 Bosque
+                </div>
+            </div>
+
+            <button class="anterior"
+                    onclick="cambiarImagen(-1)"
+                    aria-label="Imagen anterior">
+                &#10094;
+            </button>
+
+            <button class="siguiente"
+                    onclick="cambiarImagen(1)"
+                    aria-label="Imagen siguiente">
+                &#10095;
+            </button>
+
+        </div>
+
+        <div class="indicadores">
+            <button class="punto activo"
+                    onclick="irAImagen(0)"
+                    aria-label="Ver imagen 1"></button>
+
+            <button class="punto"
+                    onclick="irAImagen(1)"
+                    aria-label="Ver imagen 2"></button>
+
+            <button class="punto"
+                    onclick="irAImagen(2)"
+                    aria-label="Ver imagen 3"></button>
+
+            <button class="punto"
+                    onclick="irAImagen(3)"
+                    aria-label="Ver imagen 4"></button>
+        </div>
+
+    </div>
+
+    <a href="index.html" class="volver">
+        ← Volver al inicio
+    </a>
+
+    <footer>
+        Desarrollado por el Grupo 4
+        <p>Programación Web Avanzada - 2026</p>
+    </footer>
+
+    <script>
+        let indiceActual = 0;
+
+        const diapositivas =
+            document.querySelectorAll(".diapositiva");
+
+        const puntos =
+            document.querySelectorAll(".punto");
+
+        function mostrarImagen(indice) {
+
+            // Regresar al inicio al llegar al final
+            if (indice >= diapositivas.length) {
+                indiceActual = 0;
+            } else if (indice < 0) {
+                indiceActual = diapositivas.length - 1;
+            } else {
+                indiceActual = indice;
+            }
+
+            // Ocultar todas las imágenes
+            diapositivas.forEach(function(diapositiva) {
+                diapositiva.classList.remove("activa");
+            });
+
+            // Desactivar todos los indicadores
+            puntos.forEach(function(punto) {
+                punto.classList.remove("activo");
+            });
+
+            // Mostrar la imagen seleccionada
+            diapositivas[indiceActual].classList.add("activa");
+            puntos[indiceActual].classList.add("activo");
+        }
+
+        function cambiarImagen(direccion) {
+            mostrarImagen(indiceActual + direccion);
+            reiniciarAutomatico();
+        }
+
+        function irAImagen(indice) {
+            mostrarImagen(indice);
+            reiniciarAutomatico();
+        }
+
+        // Cambio automático cada 3 segundos
+        let intervalo = setInterval(function() {
+            mostrarImagen(indiceActual + 1);
+        }, 3000);
+
+        function reiniciarAutomatico() {
+            clearInterval(intervalo);
+
+            intervalo = setInterval(function() {
+                mostrarImagen(indiceActual + 1);
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programación Web Avanzada - Grupo 4</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff7f3;
+    color: #10294e;
+}
+
+/* Encabezado */
+header {
+    background: #ffddd9;
+    padding: 15px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+nav a {
+    color: #10294e;
+    text-decoration: none;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+nav a:hover,
+nav a.activo {
+    background: #ff5e74;
+    color: white;
+}
+
+/* Presentación */
+.inicio {
+    padding: 45px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    background: linear-gradient(115deg,
+        #ffb9c8 0%,
+        #ffe2d3 40%,
+        #bceaff 75%,
+        #82cfff 100%);
+}
+
+.presentacion {
+    flex: 1;
+}
+
+.unidad {
+    color: #168cda;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(36px, 5vw, 65px);
+    margin: 10px 0;
+    line-height: 1.1;
+}
+
+.subtitulo {
+    display: inline-block;
+    background: #ff7086;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 15px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.descripcion {
+    font-size: 19px;
+    line-height: 1.6;
+    max-width: 600px;
+}
+
+/* Grupo */
+.grupo {
+    flex: 0 1 440px;
+    background: #ffffffd9;
+    border: 1px solid #65b8ff;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 5px 12px #00000015;
+}
+
+.grupo h2 {
+    font-size: 32px;
+    text-align: center;
+    margin: 0 0 18px;
+}
+
+.grupo h3 {
+    background: #a5d9ff;
+    border-radius: 25px;
+    padding: 8px;
+    text-align: center;
+}
+
+.grupo ul {
+    list-style: none;
+    padding: 0;
+}
+
+.grupo li {
+    margin: 12px 0;
+    font-size: 17px;
+}
+
+.grupo li::before {
+    content: "👤 ";
+    margin-right: 8px;
+}
+
+/* Ejercicios */
+main {
+    padding: 35px 5% 45px;
+    background: #fff9f6;
+}
+
+.titulo-ejercicios {
+    display: inline-block;
+    background: #ffe7aa;
+    padding: 8px 15px;
+    border-radius: 15px;
+    font-size: 30px;
+    margin: 0;
+}
+
+.indicacion {
+    font-size: 17px;
+}
+
+.contenedor {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 25px;
+}
+
+.tarjeta {
+    position: relative;
+    text-align: center;
+    border-radius: 17px;
+    padding: 20px 12px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 8px #00000012;
+    transition: transform 0.3s;
+}
+
+.tarjeta:hover {
+    transform: translateY(-6px);
+}
+
+.numero {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    border-radius: 50%;
+    background: #ffffff80;
+    padding: 8px 13px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.icono {
+    font-size: 43px;
+    margin: 5px 0 12px;
+}
+
+.tarjeta h3 {
+    font-size: 16px;
+    margin: 5px 0 20px;
+    flex: 1;
+}
+
+.tarjeta a {
+    display: block;
+    width: 90%;
+    padding: 11px 5px;
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    background: #ff5577;
+    font-weight: bold;
+}
+
+.tarjeta a:hover {
+    filter: brightness(0.9);
+}
+
+.rosa { background: #ffdee7; border: 1px solid #ffb3c4; }
+.azul { background: #d5edff; border: 1px solid #a5d8ff; }
+.verde { background: #c8f5ed; border: 1px solid #9be5dc; }
+.morado { background: #e8dcff; border: 1px solid #d1baff; }
+.naranja { background: #ffe1d0; border: 1px solid #ffc09d; }
+.amarillo { background: #ffedc8; border: 1px solid #ffda88; }
+
+.azul a { background: #1689ee; }
+.verde a { background: #20a99b; }
+.morado a { background: #8058df; }
+.naranja a { background: #ff7836; }
+.amarillo a { background: #ffad26; }
+
+/* Pie de página */
+footer {
+    background: #172f52;
+    color: white;
+    padding: 25px 5%;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    line-height: 1.7;
+}
+
+footer p {
+    margin: 3px 0;
+}
+
+/* Adaptación a pantallas */
+@media (max-width: 1100px) {
+    .contenedor {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 750px) {
+    .inicio {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .grupo {
+        flex: auto;
+    }
+
+    .contenedor {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 450px) {
+    .contenedor {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        justify-content: center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">💻 Programación Web Avanzada</div>
+
+    <nav>
+        <a href="#inicio" class="activo">Inicio</a>
+        <a href="#ejercicios">Ejercicios</a>
+        <a href="#grupo">Grupo 4</a>
+        <a href="#acerca">Acerca de</a>
+    </nav>
+</header>
+
+<section class="inicio" id="inicio">
+
+    <div class="presentacion">
+        <div class="unidad">UNIDAD 1</div>
+
+        <h1>Programación<br>Web Avanzada</h1>
+
+        <div class="subtitulo">Tarea Práctica 2</div>
+
+        <p class="descripcion">
+            Ejercicios de complejidad baja y media
+            de empleo de HTML, CSS y JavaScript
+            en páginas y sitios web.
+        </p>
+    </div>
+
+    <div class="grupo" id="grupo">
+        <h2>👥 GRUPO 4</h2>
+        <h3>Integrantes:</h3>
+
+        <ul>
+            <li>Norka Mideros</li>
+            <li>Jorge Villamar</li>
+            <li>Bruce Balarezo</li>
+            <li>Chinlle Carrillo</li>
+            <li>Liseth Criollo</li>
+        </ul>
+    </div>
+
+</section>
+
+<main id="ejercicios">
+
+    <h2 class="titulo-ejercicios">Nuestros Ejercicios</h2>
+
+    <p class="indicacion">
+        Selecciona un ejercicio para ver su implementación.
+    </p>
+
+    <div class="contenedor" id="listaEjercicios"></div>
+
+</main>
+
+<footer id="acerca">
+    <div>
+        <p>© 2026 - Programación Web Avanzada</p>
+        <p>Tarea Práctica 2 - Unidad 1</p>
+    </div>
+
+    <div>
+        <p><strong>Desarrollado por el Grupo 4</strong></p>
+        <p>Norka Mideros | Jorge Villamar | Bruce Balarezo</p>
+        <p>Chinlle Carrillo | Liseth Criollo</p>
+    </div>
+</footer>
+
+<script>
+const ejercicios = [
+    ["👆", "Cambio de Estilo al Clic", "rosa"],
+    ["🧮", "Calculadora Simple", "azul"],
+    ["🖼️", "Cambio de Imagen al Pasar el Ratón", "verde"],
+    ["🕒", "Reloj Analógico", "morado"],
+    ["📝", "Validación de Formulario", "naranja"],
+    ["📋", "Lista de Tareas Interactiva", "rosa"],
+    ["☰", "Menú de Navegación Desplegable", "azul"],
+    ["🎞️", "Carrusel de Imágenes", "amarillo"],
+    ["⏳", "Temporizador de Cuenta Regresiva", "verde"],
+    ["❓", "Juego de Preguntas y Respuestas", "morado"]
+];
+
+const lista = document.getElementById("listaEjercicios");
+
+ejercicios.forEach(function(ejercicio, indice) {
+    let numero = indice + 1;
+    let archivo = "ej" + String(numero).padStart(2, "0") + ".html";
+
+    let tarjeta = document.createElement("div");
+    tarjeta.className = "tarjeta " + ejercicio[2];
+
+    let etiquetaNumero = document.createElement("span");
+    etiquetaNumero.className = "numero";
+    etiquetaNumero.textContent = numero;
+
+    let icono = document.createElement("div");
+    icono.className = "icono";
+    icono.textContent = ejercicio[0];
+
+    let titulo = document.createElement("h3");
+    titulo.textContent = ejercicio[1];
+
+    let enlace = document.createElement("a");
+    enlace.href = archivo;
+    enlace.textContent = "Ver ejercicio";
+
+    tarjeta.append(etiquetaNumero, icono, titulo, enlace);
+    lista.appendChild(tarjeta);
+});
+</script>
+
+</body>
+</html>

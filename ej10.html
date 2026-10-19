@@ -1,0 +1,404 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 10 - Cuestionario Interactivo</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #ffd6d6, #c9edff);
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+            color: #17365c;
+        }
+
+        header {
+            background-color: #ffb6a3;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 10px;
+        }
+
+        .contenedor {
+            background-color: white;
+            width: 90%;
+            max-width: 750px;
+            margin: 40px auto;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px #00000020;
+        }
+
+        .pregunta {
+            background-color: #e9f7ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            text-align: left;
+        }
+
+        .pregunta h3 {
+            margin-top: 0;
+        }
+
+        .opcion {
+            display: block;
+            background-color: white;
+            padding: 12px;
+            margin: 9px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .opcion:hover {
+            border-color: #ffb6c1;
+        }
+
+        .opcion input {
+            margin-right: 10px;
+            accent-color: #ff7185;
+        }
+
+        button {
+            background-color: #ff7185;
+            color: white;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 8px;
+        }
+
+        button:hover {
+            background-color: #e95470;
+        }
+
+        .reiniciar {
+            background-color: #6daee8;
+        }
+
+        .reiniciar:hover {
+            background-color: #468ecb;
+        }
+
+        #resultado {
+            display: none;
+            background-color: #d5f5e3;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 25px;
+        }
+
+        #resultado h2 {
+            margin-top: 0;
+        }
+
+        .correcta {
+            border-color: #5abfa6;
+            background-color: #e4f8ee;
+        }
+
+        .incorrecta {
+            border-color: #ff7185;
+            background-color: #ffe5e9;
+        }
+
+        #mensaje {
+            color: #b32626;
+            font-weight: bold;
+        }
+
+        .volver {
+            display: inline-block;
+            margin: 15px;
+            color: #17365c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .contenedor {
+                padding: 20px 12px;
+            }
+
+            .pregunta {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Ejercicio 10</h1>
+        <h2>Cuestionario Interactivo</h2>
+    </header>
+
+    <div class="contenedor">
+
+        <h2>🧠 Pon a prueba tus conocimientos</h2>
+
+        <p>
+            Responde las siguientes preguntas sobre
+            HTML, CSS y JavaScript.
+        </p>
+
+        <form id="cuestionario">
+
+            <div class="pregunta" id="pregunta1">
+                <h3>1. ¿Para qué se utiliza HTML?</h3>
+
+                <label class="opcion">
+                    <input type="radio" name="p1" value="a">
+                    Para diseñar bases de datos
+                </label>
+
+                <label class="opcion">
+                    <input type="radio" name="p1" value="b">
+                    Para estructurar páginas web
+                </label>
+
+                <label class="opcion">
+                    <input type="radio" name="p1" value="c">
+                    Para editar fotografías
+                </label>
+            </div>
+
+            <div class="pregunta" id="pregunta2">
+                <h3>2. ¿Qué lenguaje se utiliza para dar estilo a una página web?</h3>
+
+                <label class="opcion">
+                    <input type="radio" name="p2" value="a">
+                    CSS
+                </label>
+
+                <label class="opcion">
+                    <input type="radio" name="p2" value="b">
+                    Python
+                </label>
+
+                <label class="opcion">
+                    <input type="radio" name="p2" value="c">
+                    SQL
+                </label>
+            </div>
+
+            <div class="pregunta" id="pregunta3">
+                <h3>3. ¿Qué lenguaje permite agregar interactividad a una página web?</h3>
+
+                <label class="opcion">
+                    <input type="radio" name="p3" value="a">
+                    HTML
+                </label>
+
+                <label class="opcion">
+                    <input type="radio" name="p3" value="b">
+                    CSS
+                </label>
+
+                <label class="opcion">
+                    <input type="radio" name="p3" value="c">
+                    JavaScript
+                </label>
+            </div>
+
+            <div class="pregunta" id="pregunta4">
+                <h3>4. ¿Qué etiqueta HTML se utiliza para insertar una imagen?</h3>
+
+                <label class="opcion">
+                    <input type="radio" name="p4" value="a">
+                    &lt;img&gt;
+                </label>
+
+                <label class="opcion">
+                    <input type="radio" name="p4" value="b">
+                    &lt;image&gt;
+                </label>
+
+                <label class="opcion">
+                    <input type="radio" name="p4" value="c">
+                    &lt;picturefile&gt;
+                </label>
+            </div>
+
+            <div class="pregunta" id="pregunta5">
+                <h3>5. ¿Qué función de JavaScript permite mostrar una alerta?</h3>
+
+                <label class="opcion">
+                    <input type="radio" name="p5" value="a">
+                    console.log()
+                </label>
+
+                <label class="opcion">
+                    <input type="radio" name="p5" value="b">
+                    alert()
+                </label>
+
+                <label class="opcion">
+                    <input type="radio" name="p5" value="c">
+                    document.write()
+                </label>
+            </div>
+
+            <p id="mensaje" role="status"></p>
+
+            <button type="submit">
+                ✅ Calificar respuestas
+            </button>
+
+            <button
+                type="button"
+                class="reiniciar"
+                onclick="reiniciarCuestionario()">
+                🔄 Intentar nuevamente
+            </button>
+
+        </form>
+
+        <div id="resultado" role="status" aria-live="polite">
+            <h2>🎉 Resultado Final</h2>
+            <p id="puntuacion"></p>
+            <p id="comentario"></p>
+        </div>
+
+    </div>
+
+    <a href="index.html" class="volver">
+        ← Volver al inicio
+    </a>
+
+    <footer>
+        Desarrollado por el Grupo 4
+        <p>Programación Web Avanzada - 2026</p>
+    </footer>
+
+    <script>
+        const respuestasCorrectas = {
+            p1: "b",
+            p2: "a",
+            p3: "c",
+            p4: "a",
+            p5: "b"
+        };
+
+        const formulario = document.getElementById("cuestionario");
+        const resultado = document.getElementById("resultado");
+        const mensaje = document.getElementById("mensaje");
+
+        formulario.addEventListener("submit", function(evento) {
+            evento.preventDefault();
+
+            let puntuacion = 0;
+
+            // Comprobar que todas las preguntas estén respondidas
+            for (let numero = 1; numero <= 5; numero++) {
+                let respuesta = document.querySelector(
+                    'input[name="p' + numero + '"]:checked'
+                );
+
+                if (!respuesta) {
+                    mensaje.textContent =
+                        "❌ Debes responder todas las preguntas.";
+                    resultado.style.display = "none";
+                    return;
+                }
+            }
+
+            mensaje.textContent = "";
+
+            // Quitar colores de evaluaciones anteriores
+            document.querySelectorAll(".opcion").forEach(function(opcion) {
+                opcion.classList.remove("correcta", "incorrecta");
+            });
+
+            // Revisar cada respuesta
+            for (let numero = 1; numero <= 5; numero++) {
+
+                let nombre = "p" + numero;
+
+                let seleccionada = document.querySelector(
+                    'input[name="' + nombre + '"]:checked'
+                );
+
+                let correcta = document.querySelector(
+                    'input[name="' + nombre + '"][value="' +
+                    respuestasCorrectas[nombre] + '"]'
+                );
+
+                if (seleccionada.value === respuestasCorrectas[nombre]) {
+                    puntuacion++;
+                    seleccionada.closest(".opcion")
+                        .classList.add("correcta");
+                } else {
+                    seleccionada.closest(".opcion")
+                        .classList.add("incorrecta");
+
+                    correcta.closest(".opcion")
+                        .classList.add("correcta");
+                }
+            }
+
+            let porcentaje = (puntuacion / 5) * 100;
+
+            document.getElementById("puntuacion").textContent =
+                "Obtuviste " + puntuacion +
+                " de 5 respuestas correctas (" +
+                porcentaje + "%).";
+
+            let comentario = "";
+
+            if (puntuacion === 5) {
+                comentario = "🏆 ¡Excelente! Todas tus respuestas son correctas.";
+            } else if (puntuacion >= 3) {
+                comentario = "👏 ¡Buen trabajo! Sigue practicando.";
+            } else {
+                comentario = "📚 Puedes mejorar. ¡Inténtalo nuevamente!";
+            }
+
+            document.getElementById("comentario").textContent =
+                comentario;
+
+            resultado.style.display = "block";
+            resultado.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+        });
+
+        function reiniciarCuestionario() {
+            formulario.reset();
+
+            document.querySelectorAll(".opcion").forEach(function(opcion) {
+                opcion.classList.remove("correcta", "incorrecta");
+            });
+
+            mensaje.textContent = "";
+            resultado.style.display = "none";
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    </script>
+
+</body>
+</html>

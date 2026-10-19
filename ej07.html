@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 7 - Menú Desplegable</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #ffd6d6, #c9edff);
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+            color: #17365c;
+        }
+
+        header {
+            background-color: #ffb6a3;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 10px;
+        }
+
+        .contenedor {
+            background-color: white;
+            width: 90%;
+            max-width: 750px;
+            margin: 40px auto;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px #00000020;
+        }
+
+        /* Barra de navegación */
+        nav {
+            background-color: #a8ddff;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu > li {
+            position: relative;
+        }
+
+        .menu a,
+        .menu button {
+            display: block;
+            padding: 16px 22px;
+            color: #17365c;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .menu a:hover,
+        .menu button:hover {
+            background-color: #ffb6c1;
+            border-radius: 8px;
+        }
+
+        /* Opciones desplegables */
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 190px;
+            background-color: #fff1f3;
+            padding: 8px;
+            margin: 0;
+            list-style: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px #00000020;
+            z-index: 10;
+            text-align: left;
+        }
+
+        .submenu.mostrar {
+            display: block;
+        }
+
+        .submenu a {
+            padding: 12px;
+            font-weight: normal;
+        }
+
+        .informacion {
+            background-color: #e9f7ff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+
+        .volver {
+            display: inline-block;
+            margin: 15px;
+            color: #17365c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .menu {
+                flex-direction: column;
+            }
+
+            .menu > li {
+                width: 100%;
+            }
+
+            .menu a,
+            .menu button {
+                width: 100%;
+                text-align: center;
+            }
+
+            .submenu {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Ejercicio 7</h1>
+        <h2>Menú de Navegación Desplegable</h2>
+    </header>
+
+    <div class="contenedor">
+
+        <h2>🌐 Mi Página Web</h2>
+
+        <p>
+            Explora las opciones de nuestro
+            menú de navegación interactivo.
+        </p>
+
+        <nav aria-label="Navegación principal">
+            <ul class="menu">
+
+                <li>
+                    <a href="#inicio">🏠 Inicio</a>
+                </li>
+
+                <li>
+                    <button
+                        id="botonServicios"
+                        type="button"
+                        aria-expanded="false"
+                        aria-controls="submenuServicios"
+                        onclick="mostrarMenu()">
+                        📂 Servicios ▼
+                    </button>
+
+                    <ul class="submenu" id="submenuServicios">
+
+                        <li>
+                            <a href="#diseno">
+                                Diseño Web
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#programacion">
+                                Programación
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#soporte">
+                                Soporte Técnico
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#nosotros">👥 Nosotros</a>
+                </li>
+
+                <li>
+                    <a href="#contacto">📞 Contacto</a>
+                </li>
+
+            </ul>
+        </nav>
+
+        <div class="informacion" id="informacion">
+            <h3 id="tituloInfo">Bienvenidos</h3>
+            <p id="textoInfo">
+                Selecciona una opción del menú para
+                conocer más sobre nuestros servicios.
+            </p>
+        </div>
+
+    </div>
+
+    <a href="index.html" class="volver">
+        ← Volver al inicio
+    </a>
+
+    <footer>
+        Desarrollado por el Grupo 4
+        <p>Programación Web Avanzada - 2026</p>
+    </footer>
+
+    <script>
+        const submenu = document.getElementById("submenuServicios");
+        const boton = document.getElementById("botonServicios");
+
+        function mostrarMenu() {
+            submenu.classList.toggle("mostrar");
+
+            const abierto = submenu.classList.contains("mostrar");
+            boton.setAttribute("aria-expanded", abierto);
+        }
+
+        function cerrarMenu() {
+            submenu.classList.remove("mostrar");
+            boton.setAttribute("aria-expanded", "false");
+        }
+
+        // Cerrar al hacer clic fuera del menú
+        document.addEventListener("click", function(evento) {
+            if (!boton.contains(evento.target) &&
+                !submenu.contains(evento.target)) {
+                cerrarMenu();
+            }
+        });
+
+        // Cerrar con la tecla Escape
+        document.addEventListener("keydown", function(evento) {
+            if (evento.key === "Escape") {
+                cerrarMenu();
+            }
+        });
+
+        // Mostrar información según la opción seleccionada
+        const informacion = {
+            "#inicio": [
+                "Bienvenidos",
+                "Esta es nuestra página de ejemplo para el ejercicio 7."
+            ],
+            "#diseno": [
+                "Diseño Web",
+                "Creamos páginas web atractivas y adaptables."
+            ],
+            "#programacion": [
+                "Programación",
+                "Desarrollamos funciones interactivas con JavaScript."
+            ],
+            "#soporte": [
+                "Soporte Técnico",
+                "Brindamos soluciones a problemas informáticos."
+            ],
+            "#nosotros": [
+                "Sobre Nosotros",
+                "Somos el Grupo 4 de Programación Web Avanzada."
+            ],
+            "#contacto": [
+                "Contacto",
+                "Esta sección es una demostración de navegación."
+            ]
+        };
+
+        document.querySelectorAll(".menu a").forEach(function(enlace) {
+            enlace.addEventListener("click", function(evento) {
+                evento.preventDefault();
+
+                const seccion = informacion[enlace.getAttribute("href")];
+
+                if (seccion) {
+                    document.getElementById("tituloInfo").textContent =
+                        seccion[0];
+
+                    document.getElementById("textoInfo").textContent =
+                        seccion[1];
+                }
+
+                cerrarMenu();
+            });
+        });
+    </script>
+
+</body>
+</html>

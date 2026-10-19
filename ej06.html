@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 6 - Lista de Tareas</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #ffd6d6, #c9edff);
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+            color: #17365c;
+        }
+
+        header {
+            background-color: #ffb6a3;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 10px;
+        }
+
+        .contenedor {
+            background-color: white;
+            width: 90%;
+            max-width: 550px;
+            margin: 40px auto;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px #00000020;
+        }
+
+        .entrada {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        input {
+            flex: 1;
+            min-width: 0;
+            padding: 13px;
+            border: 2px solid #a8ddff;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #ff7185;
+        }
+
+        button {
+            background-color: #ff7185;
+            color: white;
+            border: none;
+            padding: 13px 17px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e95470;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 25px;
+        }
+
+        li {
+            background-color: #e9f7ff;
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .texto-tarea {
+            flex: 1;
+            overflow-wrap: anywhere;
+            cursor: pointer;
+        }
+
+        .completada {
+            text-decoration: line-through;
+            color: #777;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 6px;
+        }
+
+        .completar {
+            background-color: #5abfa6;
+        }
+
+        .completar:hover {
+            background-color: #399c83;
+        }
+
+        .eliminar {
+            background-color: #ff7185;
+        }
+
+        #mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #b32626;
+        }
+
+        .volver {
+            display: inline-block;
+            margin: 15px;
+            color: #17365c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 20px;
+        }
+
+        @media (max-width: 450px) {
+            .entrada {
+                flex-direction: column;
+            }
+
+            li {
+                flex-wrap: wrap;
+            }
+
+            .acciones {
+                margin-left: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Ejercicio 6</h1>
+        <h2>Lista de Tareas Interactiva</h2>
+    </header>
+
+    <div class="contenedor">
+
+        <h2>📋 Mis Tareas Pendientes</h2>
+
+        <p>
+            Organiza tus actividades agregando,
+            completando o eliminando tareas.
+        </p>
+
+        <div class="entrada">
+            <input
+                type="text"
+                id="nuevaTarea"
+                placeholder="Escribe una tarea..."
+                aria-label="Nueva tarea"
+            >
+
+            <button onclick="agregarTarea()">
+                ➕ Agregar
+            </button>
+        </div>
+
+        <p id="mensaje" role="status"></p>
+
+        <ul id="listaTareas"></ul>
+
+    </div>
+
+    <a href="index.html" class="volver">
+        ← Volver al inicio
+    </a>
+
+    <footer>
+        Desarrollado por el Grupo 4
+        <p>Programación Web Avanzada - 2026</p>
+    </footer>
+
+    <script>
+        const entrada = document.getElementById("nuevaTarea");
+        const lista = document.getElementById("listaTareas");
+        const mensaje = document.getElementById("mensaje");
+
+        function agregarTarea() {
+
+            let texto = entrada.value.trim();
+
+            if (texto === "") {
+                mensaje.textContent =
+                    "❌ Debes escribir una tarea primero.";
+                return;
+            }
+
+            mensaje.textContent = "";
+
+            // Crear un elemento de la lista
+            let tarea = document.createElement("li");
+
+            // Crear el texto de la tarea
+            let contenido = document.createElement("span");
+            contenido.className = "texto-tarea";
+            contenido.textContent = texto;
+
+            // Crear contenedor de botones
+            let acciones = document.createElement("div");
+            acciones.className = "acciones";
+
+            // Botón para completar
+            let botonCompletar = document.createElement("button");
+            botonCompletar.textContent = "✓";
+            botonCompletar.className = "completar";
+            botonCompletar.title = "Marcar como completada";
+            botonCompletar.setAttribute(
+                "aria-label",
+                "Marcar tarea como completada"
+            );
+
+            botonCompletar.onclick = function() {
+                contenido.classList.toggle("completada");
+            };
+
+            // Botón para eliminar
+            let botonEliminar = document.createElement("button");
+            botonEliminar.textContent = "🗑️";
+            botonEliminar.className = "eliminar";
+            botonEliminar.title = "Eliminar tarea";
+            botonEliminar.setAttribute(
+                "aria-label",
+                "Eliminar tarea"
+            );
+
+            botonEliminar.onclick = function() {
+                tarea.remove();
+            };
+
+            // Agregar los elementos
+            acciones.appendChild(botonCompletar);
+            acciones.appendChild(botonEliminar);
+
+            tarea.appendChild(contenido);
+            tarea.appendChild(acciones);
+
+            lista.appendChild(tarea);
+
+            // Limpiar el campo
+            entrada.value = "";
+            entrada.focus();
+        }
+
+        // Permitir agregar tareas con Enter
+        entrada.addEventListener("keydown", function(evento) {
+            if (evento.key === "Enter") {
+                agregarTarea();
+            }
+        });
+    </script>
+
+</body>
+</html>

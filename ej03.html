@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 3 - Cambio de Imagen</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #ffd6d6, #c9edff);
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #ffb6a3;
+            padding: 20px;
+            color: #17365c;
+        }
+
+        h1 {
+            margin: 10px;
+        }
+
+        .contenedor {
+            background-color: white;
+            width: 85%;
+            max-width: 650px;
+            margin: 45px auto;
+            padding: 25px 15px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px #00000020;
+        }
+
+        h2 {
+            color: #17365c;
+        }
+
+        .imagen {
+            width: 90%;
+            max-width: 500px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 18px;
+            border: 4px solid #a8ddff;
+            box-shadow: 0 5px 15px #00000025;
+            transition: opacity 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+
+        .imagen:hover {
+            transform: scale(1.03);
+        }
+
+        .mensaje {
+            color: #17365c;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .volver {
+            display: inline-block;
+            margin: 15px;
+            color: #17365c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 20px;
+            color: #17365c;
+        }
+
+        @media (max-width: 600px) {
+            .imagen {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Ejercicio 3</h1>
+        <h2>Cambio de Imagen al Pasar el Ratón</h2>
+    </header>
+
+    <div class="contenedor">
+
+        <h2>🌅 Galería Interactiva</h2>
+
+        <p>
+            Coloca el cursor del mouse sobre la imagen
+            para descubrir otro paisaje.
+        </p>
+
+        <img
+            id="imagenPaisaje"
+            class="imagen"
+            src="https://images.unsplash.com/photo-1500534623283-312aade485b7?w=900"
+            alt="Paisaje natural"
+            onmouseover="cambiarImagen()"
+            onmouseout="restaurarImagen()"
+        >
+
+        <p class="mensaje" id="mensaje">
+            🖱️ Pasa el mouse sobre la imagen
+        </p>
+
+    </div>
+
+    <a href="index.html" class="volver">
+        ← Volver al inicio
+    </a>
+
+    <footer>
+        Desarrollado por el Grupo 4
+        <p>Programación Web Avanzada - 2026</p>
+    </footer>
+
+    <script>
+        const imagenOriginal =
+            "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=900";
+
+        const imagenNueva =
+            "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=900";
+
+        const imagen = document.getElementById("imagenPaisaje");
+        const mensaje = document.getElementById("mensaje");
+
+        // Cargamos la segunda imagen anticipadamente
+        const precarga = new Image();
+        precarga.src = imagenNueva;
+
+        function cambiarImagen() {
+            imagen.style.opacity = "0.4";
+
+            imagen.src = imagenNueva;
+
+            mensaje.textContent =
+                "✨ ¡La imagen ha cambiado!";
+        }
+
+        function restaurarImagen() {
+            imagen.style.opacity = "0.4";
+
+            imagen.src = imagenOriginal;
+
+            mensaje.textContent =
+                "🖱️ Pasa el mouse sobre la imagen";
+        }
+
+        imagen.onload = function() {
+            imagen.style.opacity = "1";
+        };
+    </script>
+
+</body>
+</html>
